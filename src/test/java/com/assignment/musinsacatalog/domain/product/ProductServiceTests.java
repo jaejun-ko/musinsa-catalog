@@ -1,11 +1,12 @@
 package com.assignment.musinsacatalog.domain.product;
 
 import com.assignment.musinsacatalog.domain.brand.Brand;
+import com.assignment.musinsacatalog.domain.brand.BrandReader;
 import com.assignment.musinsacatalog.domain.category.Category;
+import com.assignment.musinsacatalog.domain.category.CategoryReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -29,6 +31,12 @@ public class ProductServiceTests {
 
     @Mock
     private ProductReader productReader;
+
+    @Mock
+    private BrandReader brandReader;
+
+    @Mock
+    private CategoryReader categoryReader;
 
     @BeforeEach
     void setUp() {
@@ -46,7 +54,9 @@ public class ProductServiceTests {
         Product product = Product.builder().brand(brand).category(category).price(100L).build();
 
         // when
-        when(productStore.store(ArgumentMatchers.any(Product.class))).thenReturn(product);
+        when(brandReader.getBrand(any())).thenReturn(brand);
+        when(categoryReader.getCategory(any())).thenReturn(category);
+        when(productStore.store(any(Product.class))).thenReturn(product);
 
         ProductInfo.Main result = productService.registerProduct(command);
 
@@ -54,7 +64,7 @@ public class ProductServiceTests {
         assertEquals("Brand A", result.getBrandName());
         assertEquals("Category A", result.getCategoryName());
         assertEquals(100L, result.getPrice());
-        verify(productStore, times(1)).store(ArgumentMatchers.any(Product.class));
+        verify(productStore, times(1)).store(any(Product.class));
     }
 
     @Test
@@ -68,13 +78,15 @@ public class ProductServiceTests {
         Product product = Product.builder().brand(brand).category(category).price(100L).build();
 
         // when
+        when(brandReader.getBrand(any())).thenReturn(brand);
+        when(categoryReader.getCategory(any())).thenReturn(category);
         when(productReader.getProduct(1L)).thenReturn(product);
 
         ProductInfo.Main result = productService.modifyProduct(command);
 
         // then
-        assertEquals(3L, result.getBrandId());
-        assertEquals(4L, result.getCategoryId());
+        assertEquals("Brand A", result.getBrandName());
+        assertEquals("Category A", result.getCategoryName());
         assertEquals(200L, result.getPrice());
         verify(productReader, times(1)).getProduct(1L);
     }

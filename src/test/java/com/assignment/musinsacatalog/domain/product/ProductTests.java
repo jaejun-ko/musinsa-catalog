@@ -19,8 +19,8 @@ public class ProductTests {
         Brand brand = Brand.builder().name("Brand A").build();
         Category category = Category.builder().name("Category A").build();
         Product product = Product.builder().brand(brand).category(category).price(100L).build();
-        assertEquals(1L, product.getBrand().getId());
-        assertEquals(2L, product.getCategory().getId());
+        assertEquals("Brand A", product.getBrand().getName());
+        assertEquals("Category A", product.getCategory().getName());
         assertEquals(100L, product.getPrice());
         assertFalse(product.getDeleted());
     }
@@ -44,8 +44,8 @@ public class ProductTests {
         Category category = Category.builder().name("Category A").build();
         Product product = Product.builder().brand(brand).category(category).price(100L).build();
         product.modify(brand, category, 200L);
-        assertEquals(3L, product.getBrand().getId());
-        assertEquals(4L, product.getCategory().getId());
+        assertEquals("Brand A", product.getBrand().getName());
+        assertEquals("Category A", product.getCategory().getName());
         assertEquals(200L, product.getPrice());
     }
 
