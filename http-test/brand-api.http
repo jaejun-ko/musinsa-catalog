@@ -1,0 +1,28 @@
+### GET 브랜드 목록 조회
+GET http://localhost:8080/api/v1/brands
+Content-Type: application/json
+
+### GET 브랜드 상세 조회
+GET http://localhost:8080/api/v1/brands/1
+Content-Type: application/json
+
+### POST 브랜드 등록
+POST http://localhost:8080/api/v1/brands
+Content-Type: application/json
+
+{
+  "name": "신규 브랜드"
+}
+
+### PUT 브랜드 수정
+PUT http://localhost:8080/api/v1/brands
+Content-Type: application/json
+
+{
+  "id": 10,
+  "name": "수정된 브랜드"
+}
+
+### DELETE 브랜드 삭제
+DELETE http://localhost:8080/api/v1/brands/10
+Content-Type: application/json

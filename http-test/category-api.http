@@ -1,0 +1,28 @@
+### GET 카테고리 목록 조회
+GET http://localhost:8080/api/v1/categories
+Content-Type: application/json
+
+### GET 카테고리 상세 조회
+GET http://localhost:8080/api/v1/categories/1
+Content-Type: application/json
+
+### POST 카테고리 등록
+POST http://localhost:8080/api/v1/categories
+Content-Type: application/json
+
+{
+  "name": "신규"
+}
+
+### PUT 카테고리 수정
+PUT http://localhost:8080/api/v1/categories
+Content-Type: application/json
+
+{
+  "id": 9,
+  "name": "수정"
+}
+
+### DELETE 카테고리 삭제
+DELETE http://localhost:8080/api/v1/categories/9
+Content-Type: application/json
