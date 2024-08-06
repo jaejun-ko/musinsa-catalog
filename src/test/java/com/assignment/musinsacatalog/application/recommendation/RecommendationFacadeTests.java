@@ -21,7 +21,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 public class RecommendationFacadeTests {
@@ -66,7 +65,7 @@ public class RecommendationFacadeTests {
         // then
         assertEquals(300L, result.getTotalPrice());
         assertEquals(2, result.getCategoryProducts().size());
-        assertEquals(1L, result.getCategoryProducts().get(0).getCategoryId());
+        assertEquals("Category A", result.getCategoryProducts().get(0).getCategoryName());
         assertEquals(100L, result.getCategoryProducts().get(0).getPrice());
     }
 
@@ -88,12 +87,12 @@ public class RecommendationFacadeTests {
 
         // when
         when(brandService.getLowestPriceBrand()).thenReturn(mockBrand);
-        when(productService.getLowestTotalPriceProductsByBrandId(anyLong())).thenReturn(mockProducts);
+        when(productService.getLowestTotalPriceProductsByBrandId(any())).thenReturn(mockProducts);
 
         RecommendationInfo.LowestPriceBrand result = recommendationFacade.getLowestPriceBrandForAllCategories();
 
         // then
-        assertEquals(1L, result.getBrandId());
+        assertEquals("Brand A", result.getBrandName());
         assertEquals(300L, result.getTotalPrice());
         assertEquals(2, result.getLowestPriceCategories().size());
     }
@@ -121,11 +120,11 @@ public class RecommendationFacadeTests {
 
         // then
         assertEquals(1, result.getLowest().size());
-        assertEquals(1L, result.getLowest().get(0).getBrandId());
+        assertEquals("Brand A", result.getLowest().get(0).getBrandName());
         assertEquals(100L, result.getLowest().get(0).getPrice());
 
         assertEquals(1, result.getHighest().size());
-        assertEquals(2L, result.getHighest().get(0).getBrandId());
+        assertEquals("Brand B", result.getHighest().get(0).getBrandName());
         assertEquals(200L, result.getHighest().get(0).getPrice());
     }
 }
